@@ -1,16 +1,11 @@
 
 #include<emscripten.h>
-#include <string>
-#include <vector>
-
 extern "C"
 {
-
   const char* EMSCRIPTEN_KEEPALIVE helloWorld()
   {
     return "Hello World";
   }
-
 
   unsigned long long EMSCRIPTEN_KEEPALIVE fibb(unsigned long long number)
   {
@@ -25,7 +20,6 @@ extern "C"
     }
     return curr;
   }
-
 }
 
 
