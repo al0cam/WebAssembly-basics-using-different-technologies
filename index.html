@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript" src="a.out.js"></script>
+   
+    <div>
+      <h2>Hello world</h2>
+      <button onclick="native()">click</button>
+    
+      <span id="helloWorld"></span>
+  
+    </div>
+    <br>
+    <div>
+		  <h2>Fibbonaci written in c using webassembly</h2>
+      <input id="inputFib" type="number" value="0"/>
+      <button onclick="native2()">click</button>
+      <span id="resultFib"></span>
+      <span id="seconds"></span>
+    </div>
+    <br>
+    <div>
+      <h2>Fibbonaci written in javascript</h2>
+      <input id="inputFibJs" type="number" value="0"/>
+      <button onclick="native3()">click</button>
+      <span id="resultFibJs"></span>
+      <span id="secondsJs"></span>
+    </div>
+
+
+    <script type='text/javascript'>
+
+      // Module.onRuntimeInitialized = function () {
+      //     helloWorld = ok.cwrap('helloWorld', 'string', []);
+      //     fibb = ok.cwrap('fibb', 'number', ['number']);
+
+      // }
+
+      let helloWorld;
+      let fibb;
+      let number = 0;
+      let fibbRes = ''
+      var startTime, endTime;
+
+      Module().then((ok)=>{
+        helloWorld = ok.cwrap('helloWorld', 'string', []);
+        fibb = ok.cwrap('fibb', 'number', ['number']);
+      })
+
+      function native()
+      {
+        document.getElementById("helloWorld").textContent = helloWorld()
+      }
+      function native2()
+      {
+        start()
+        let res = fibb(document.getElementById("inputFib").value)
+        console.log(res);
+        document.getElementById("resultFib").textContent = "Result: "+ res
+        document.getElementById("seconds").textContent = "Time (ms): "+ end()
+      }
+      function native3()
+      {
+        start()
+        let resJs = fibbJs(document.getElementById("inputFibJs").value)
+        console.log(resJs);
+        document.getElementById("resultFibJs").textContent = "Result: "+ resJs
+        document.getElementById("secondsJs").textContent = "Time (ms): "+ end()
+      }
+
+      function start() {
+        startTime = performance.now();
+      };
+
+      function end() {
+        endTime = performance.now();
+        console.log(startTime);
+        console.log(endTime);
+        var timeDiff = endTime - startTime; //in ms 
+        // strip the ms 
+        console.log(timeDiff);
+        // timeDiff /= 1000; 
+        console.log(timeDiff);
+        // get seconds 
+        return Math.round(timeDiff);
+      }
+
+      function fibbJs(numberJs)
+      {
+        if(numberJs <= 1)
+              return 0;
+        let curr = 1, prev = 0, pom = 0;
+        for(let i=2; i<numberJs; i++)
+        {
+          pom = curr;
+          curr += prev;
+          prev = pom;
+        }
+        return curr;
+      }
+
+    </script>
+</body>
+</html>
+
+<style>
+  body{
+    display: flex; 
+    text-align: center;
+    flex-direction: column;
+    max-width: 30vw; 
+    justify-self: center; 
+    margin: auto;
+    padding: 1vw;
+  }
+  div{
+    text-align: center;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+  }
+  input{
+    text-align: center;
+  }
+</style>
