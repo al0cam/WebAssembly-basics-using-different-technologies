@@ -8,6 +8,8 @@
 	let number = 0, numberJs = 0;
 	let fibbRes = '', fibbResJs = '';
 	let hello = '';
+	var startTime, endTime;
+	let seconds = '', secondsJs = '';
 
 	onMount(() => {
 		Module().then((ok)=>{
@@ -16,45 +18,14 @@
 		})
 	});
 
-
-	var startTime, endTime;
-	let seconds = '', secondsJs = '';
-
 	function start() {
 		startTime = performance.now();
 	};
 
 	function end() {
 		endTime = performance.now();
-		console.log(startTime);
-		console.log(endTime);
-		var timeDiff = endTime - startTime; //in ms 
-		// strip the ms 
-		console.log(timeDiff);
-		// timeDiff /= 1000; 
-		console.log(timeDiff);
-		// get seconds 
+		var timeDiff = endTime - startTime;
 		return Math.round(timeDiff);
-	}
-
-	function native()
-	{
-		hello = helloWorld()
-	}
-	function native2()
-	{
-		start()
-		fibbRes = fibb(BigInt(number))
-		seconds = end()
-
-	}
-	function native3()
-	{
-		start()
-		fibbResJs = fibbJs(numberJs)
-
-		secondsJs = end()
-
 	}
 	function fibbJs(numberJs)
 	{
@@ -68,6 +39,23 @@
 			prev = pom;
 		}
 		return curr;
+	}
+
+	function native()
+	{
+		hello = helloWorld()
+	}
+	function native2()
+	{
+		start()
+		fibbRes = fibb(BigInt(number))
+		seconds = end()
+	}
+	function native3()
+	{
+		start()
+		fibbResJs = fibbJs(numberJs)
+		secondsJs = end()
 	}
 </script>
 

@@ -31,16 +31,9 @@
       <span id="resultFibJs"></span>
       <span id="secondsJs"></span>
     </div>
-
-
     <script type='text/javascript'>
 
-      // Module.onRuntimeInitialized = function () {
-      //     helloWorld = ok.cwrap('helloWorld', 'string', []);
-      //     fibb = ok.cwrap('fibb', 'number', ['number']);
-
-      // }
-
+     
       let helloWorld;
       let fibb;
       let number = 0;
@@ -51,6 +44,34 @@
         helloWorld = ok.cwrap('helloWorld', 'string', []);
         fibb = ok.cwrap('fibb', 'number', ['number']);
       })
+
+      // Module.onRuntimeInitialized = function () {
+      //     helloWorld = ok.cwrap('helloWorld', 'string', []);
+      //     fibb = ok.cwrap('fibb', 'number', ['number']);
+      // }
+
+      function start() {
+        startTime = performance.now();
+      };
+
+      function end() {
+        endTime = performance.now();
+        var timeDiff = endTime - startTime;
+        return Math.round(timeDiff);
+      }
+      function fibbJs(numberJs)
+      {
+        if(numberJs <= 1)
+              return 0;
+        let curr = 1, prev = 0, pom = 0;
+        for(let i=2; i<numberJs; i++)
+        {
+          pom = curr;
+          curr += prev;
+          prev = pom;
+        }
+        return curr;
+      } 
 
       function native()
       {
@@ -72,38 +93,6 @@
         document.getElementById("resultFibJs").textContent = "Result: "+ resJs
         document.getElementById("secondsJs").textContent = "Time (ms): "+ end()
       }
-
-      function start() {
-        startTime = performance.now();
-      };
-
-      function end() {
-        endTime = performance.now();
-        console.log(startTime);
-        console.log(endTime);
-        var timeDiff = endTime - startTime; //in ms 
-        // strip the ms 
-        console.log(timeDiff);
-        // timeDiff /= 1000; 
-        console.log(timeDiff);
-        // get seconds 
-        return Math.round(timeDiff);
-      }
-
-      function fibbJs(numberJs)
-      {
-        if(numberJs <= 1)
-              return 0;
-        let curr = 1, prev = 0, pom = 0;
-        for(let i=2; i<numberJs; i++)
-        {
-          pom = curr;
-          curr += prev;
-          prev = pom;
-        }
-        return curr;
-      }
-
     </script>
 </body>
 </html>
