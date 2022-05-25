@@ -44,6 +44,7 @@
 	function native()
 	{
 		hello = helloWorld()
+		console.log(helloWorld);
 	}
 	function native2()
 	{
